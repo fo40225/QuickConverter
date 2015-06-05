@@ -124,10 +124,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     bool b;
-                    bool.TryParse(o as string, out b);
+                    bool.TryParse(s, out b);
                     return b;
                 }
                 else
@@ -139,7 +140,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        b = new Boolean();
+                        b = default(bool);
                     }
                     return b;
                 }
@@ -154,10 +155,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     byte b;
-                    byte.TryParse(o as string, out b);
+                    byte.TryParse(s, out b);
                     return b;
                 }
                 else
@@ -169,7 +171,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        b = new Byte();
+                        b = default(byte);
                     }
                     return b;
                 }
@@ -184,10 +186,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     char c;
-                    char.TryParse(o as string, out c);
+                    char.TryParse(s, out c);
                     return c;
                 }
                 else
@@ -199,7 +202,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        c = new Char();
+                        c = default(char);
                     }
                     return c;
                 }
@@ -214,10 +217,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     DateTime dt;
-                    DateTime.TryParse(o as string, out dt);
+                    DateTime.TryParse(s, out dt);
                     return dt;
                 }
                 else
@@ -229,7 +233,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        dt = new DateTime();
+                        dt = default(DateTime);
                     }
                     return dt;
                 }
@@ -244,10 +248,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     decimal d;
-                    decimal.TryParse(o as string, out d);
+                    decimal.TryParse(s, out d);
                     return d;
                 }
                 else
@@ -259,7 +264,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        d = new Decimal();
+                        d = default(decimal);
                     }
                     return d;
                 }
@@ -274,10 +279,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     double d;
-                    double.TryParse(o as string, out d);
+                    double.TryParse(s, out d);
                     return d;
                 }
                 else
@@ -289,7 +295,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        d = new Double();
+                        d = default(double);
                     }
                     return d;
                 }
@@ -300,9 +306,10 @@ namespace QuickConverter
         {
             if (throwEx)
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
-                    return (T)Enum.Parse(typeof(T), o.ToString());
+                    return (T)Enum.Parse(typeof(T), s);
                 }
                 else
                 {
@@ -311,10 +318,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     T e;
-                    Enum.TryParse<T>(o as string, out e);
+                    Enum.TryParse<T>(s, out e);
                     return e;
                 }
                 else
@@ -341,10 +349,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     float f;
-                    float.TryParse(o as string, out f);
+                    float.TryParse(s, out f);
                     return f;
                 }
                 else
@@ -356,7 +365,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        f = new Single();
+                        f = default(float);
                     }
                     return f;
                 }
@@ -371,10 +380,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     int i;
-                    int.TryParse(o as string, out i);
+                    int.TryParse(s, out i);
                     return i;
                 }
                 else
@@ -386,7 +396,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        i = new Int32();
+                        i = default(int);
                     }
                     return i;
                 }
@@ -401,10 +411,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     long l;
-                    long.TryParse(o as string, out l);
+                    long.TryParse(s, out l);
                     return l;
                 }
                 else
@@ -416,7 +427,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        l = new Int64();
+                        l = default(long);
                     }
                     return l;
                 }
@@ -431,10 +442,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     sbyte sb;
-                    sbyte.TryParse(o as string, out sb);
+                    sbyte.TryParse(s, out sb);
                     return sb;
                 }
                 else
@@ -446,7 +458,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        sb = new SByte();
+                        sb = default(sbyte);
                     }
                     return sb;
                 }
@@ -461,10 +473,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     short sh;
-                    short.TryParse(o as string, out sh);
+                    short.TryParse(s, out sh);
                     return sh;
                 }
                 else
@@ -476,7 +489,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        sh = new Int16();
+                        sh = default(short);
                     }
                     return sh;
                 }
@@ -491,10 +504,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     uint ui;
-                    uint.TryParse(o as string, out ui);
+                    uint.TryParse(s, out ui);
                     return ui;
                 }
                 else
@@ -506,7 +520,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        ui = new UInt16();
+                        ui = default(uint);
                     }
                     return ui;
                 }
@@ -521,10 +535,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     ulong ul;
-                    ulong.TryParse(o as string, out ul);
+                    ulong.TryParse(s, out ul);
                     return ul;
                 }
                 else
@@ -536,7 +551,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        ul = new UInt64();
+                        ul = default(ulong);
                     }
                     return ul;
                 }
@@ -551,10 +566,11 @@ namespace QuickConverter
             }
             else
             {
-                if (o is string)
+                string s = o as string;
+                if (s != null)
                 {
                     ushort us;
-                    ushort.TryParse(o as string, out us);
+                    ushort.TryParse(s, out us);
                     return us;
                 }
                 else
@@ -566,7 +582,7 @@ namespace QuickConverter
                     }
                     catch (Exception)
                     {
-                        us = new UInt16();
+                        us = default(ushort);
                     }
                     return us;
                 }
