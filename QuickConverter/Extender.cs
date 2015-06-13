@@ -516,7 +516,7 @@ namespace QuickConverter
                     uint ui;
                     try
                     {
-                        ui = Convert.ToUInt16(o);
+                        ui = Convert.ToUInt32(o);
                     }
                     catch (Exception)
                     {
