@@ -138,7 +138,7 @@ namespace QuickConverter
                     {
                         b = Convert.ToBoolean(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         b = default(bool);
                     }
@@ -169,7 +169,7 @@ namespace QuickConverter
                     {
                         b = Convert.ToByte(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         b = default(byte);
                     }
@@ -200,7 +200,7 @@ namespace QuickConverter
                     {
                         c = Convert.ToChar(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         c = default(char);
                     }
@@ -231,7 +231,7 @@ namespace QuickConverter
                     {
                         dt = Convert.ToDateTime(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         dt = default(DateTime);
                     }
@@ -262,7 +262,7 @@ namespace QuickConverter
                     {
                         d = Convert.ToDecimal(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         d = default(decimal);
                     }
@@ -293,7 +293,7 @@ namespace QuickConverter
                     {
                         d = Convert.ToDouble(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         d = default(double);
                     }
@@ -332,7 +332,7 @@ namespace QuickConverter
                     {
                         e = (T)o;
                     }
-                    catch (Exception)
+                    catch
                     {
                         e = (T)(object)0;
                     }
@@ -363,7 +363,7 @@ namespace QuickConverter
                     {
                         f = Convert.ToSingle(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         f = default(float);
                     }
@@ -394,7 +394,7 @@ namespace QuickConverter
                     {
                         i = Convert.ToInt32(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         i = default(int);
                     }
@@ -425,7 +425,7 @@ namespace QuickConverter
                     {
                         l = Convert.ToInt64(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         l = default(long);
                     }
@@ -456,7 +456,7 @@ namespace QuickConverter
                     {
                         sb = Convert.ToSByte(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         sb = default(sbyte);
                     }
@@ -487,7 +487,7 @@ namespace QuickConverter
                     {
                         sh = Convert.ToInt16(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         sh = default(short);
                     }
@@ -518,7 +518,7 @@ namespace QuickConverter
                     {
                         ui = Convert.ToUInt32(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         ui = default(uint);
                     }
@@ -549,7 +549,7 @@ namespace QuickConverter
                     {
                         ul = Convert.ToUInt64(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         ul = default(ulong);
                     }
@@ -580,7 +580,7 @@ namespace QuickConverter
                     {
                         us = Convert.ToUInt16(o);
                     }
-                    catch (Exception)
+                    catch
                     {
                         us = default(ushort);
                     }
@@ -646,9 +646,26 @@ namespace QuickConverter
 
         #region Type
 
+        public static object CreateInstance(this Type t)
+        {
+            return t.CreateInstance(null);
+        }
+
         public static object CreateInstance(this Type t, params object[] args)
         {
-            return Activator.CreateInstance(t);
+            if (t.IsArray)
+            {
+                Array.CreateInstance(t, args == null ? 0 : (int)args[0]);
+            }
+
+            if (args == null)
+            {
+                return Activator.CreateInstance(t);
+            }
+            else
+            {
+                return Activator.CreateInstance(t, args);
+            }
         }
 
         #endregion Type
