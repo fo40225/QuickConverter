@@ -658,14 +658,7 @@ namespace QuickConverter
                 Array.CreateInstance(t, args == null ? 0 : (int)args[0]);
             }
 
-            if (args == null)
-            {
-                return Activator.CreateInstance(t);
-            }
-            else
-            {
-                return Activator.CreateInstance(t, args);
-            }
+            return Activator.CreateInstance(t, args);
         }
 
         #endregion Type
