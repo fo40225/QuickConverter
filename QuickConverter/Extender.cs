@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
@@ -14,17 +15,26 @@ namespace QuickConverter
     {
         #region Object
 
-        public static object Box(this object o)
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static T As<T>(this object o) where T : class
         {
-            return o as object;
+            return o as T;
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static object Box(this object o)
+        {
+            return o;
+        }
+
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static object CallMethod(this object o, string methodName, params object[] args)
         {
             return Interaction.CallByName(o, methodName, CallType.Method, args);
         }
 
-        public static object DeepClone(this object o)
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static object DeepClone<T>(this T o)
         {
             return JsonConvert.DeserializeObject(o.SerializeToJsonString(), o.GetType());
         }
@@ -40,12 +50,13 @@ namespace QuickConverter
             return fi.GetValue(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static T Field<T>(this object o, string fieldName)
         {
             return (T)o.Field(fieldName);
         }
 
-        public static void Field(this object o, string fieldName, string fieldValue)
+        public static void Field<T>(this T o, string fieldName, string fieldValue)
         {
             Type t = o.GetType();
             FieldInfo fi = t.GetField(
@@ -56,67 +67,79 @@ namespace QuickConverter
             fi.SetValue(o, fieldValue);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsArray(this object o)
         {
             return Information.IsArray(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsDate(this object o)
         {
             return Information.IsDate(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsDBNull(this object o)
         {
             return Convert.IsDBNull(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsException(this object o)
         {
             return Information.IsError(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsNull(this object o)
         {
             return Information.IsNothing(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsNumeric(this object o)
         {
             return Information.IsNumeric(o);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static bool IsReferenceType(this object o)
         {
             return Information.IsReference(o);
         }
 
-        public static bool IsValueType(this object o)
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static bool IsValueType<T>(this T o)
         {
             return o is ValueType;
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static object Property(this object o, string propertyName)
         {
             return Interaction.CallByName(o, propertyName, CallType.Get);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static T Property<T>(this object o, string propertyName)
         {
             return (T)o.Property(propertyName);
         }
 
-        public static void Property(this object o, string propertyName, object propertyValue)
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static void Property<T>(this T o, string propertyName, object propertyValue)
         {
             Interaction.CallByName(o, propertyName, CallType.Set, propertyValue);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string SerializeToJsonString(this object o)
         {
             return JsonConvert.SerializeObject(o);
         }
 
-        public static bool ToBool(this object o, bool throwEx = true)
+        public static bool ToBool<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -147,7 +170,7 @@ namespace QuickConverter
             }
         }
 
-        public static byte ToByte(this object o, bool throwEx = true)
+        public static byte ToByte<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -178,7 +201,7 @@ namespace QuickConverter
             }
         }
 
-        public static char ToChar(this object o, bool throwEx = true)
+        public static char ToChar<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -209,7 +232,7 @@ namespace QuickConverter
             }
         }
 
-        public static DateTime ToDateTime(this object o, bool throwEx = true)
+        public static DateTime ToDateTime<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -240,7 +263,7 @@ namespace QuickConverter
             }
         }
 
-        public static decimal ToDecimal(this object o, bool throwEx = true)
+        public static decimal ToDecimal<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -271,7 +294,7 @@ namespace QuickConverter
             }
         }
 
-        public static double ToDouble(this object o, bool throwEx = true)
+        public static double ToDouble<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -341,7 +364,7 @@ namespace QuickConverter
             }
         }
 
-        public static float ToFloat(this object o, bool throwEx = true)
+        public static float ToFloat<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -372,7 +395,7 @@ namespace QuickConverter
             }
         }
 
-        public static int ToInt(this object o, bool throwEx = true)
+        public static int ToInt<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -403,7 +426,7 @@ namespace QuickConverter
             }
         }
 
-        public static long ToLong(this object o, bool throwEx = true)
+        public static long ToLong<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -434,7 +457,7 @@ namespace QuickConverter
             }
         }
 
-        public static sbyte ToSByte(this object o, bool throwEx = true)
+        public static sbyte ToSByte<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -465,7 +488,7 @@ namespace QuickConverter
             }
         }
 
-        public static short ToShort(this object o, bool throwEx = true)
+        public static short ToShort<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -496,7 +519,7 @@ namespace QuickConverter
             }
         }
 
-        public static uint ToUInt(this object o, bool throwEx = true)
+        public static uint ToUInt<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -527,7 +550,7 @@ namespace QuickConverter
             }
         }
 
-        public static ulong ToULong(this object o, bool throwEx = true)
+        public static ulong ToULong<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -558,7 +581,7 @@ namespace QuickConverter
             }
         }
 
-        public static ushort ToUShort(this object o, bool throwEx = true)
+        public static ushort ToUShort<T>(this T o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -589,45 +612,53 @@ namespace QuickConverter
             }
         }
 
-        public static T UnBox<T>(this object o) where T : class
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        public static T UnBox<T>(this object o)
         {
-            return o as T;
+            return (T)o;
         }
 
         #endregion Object
 
         #region String
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static byte[] Base64Decode(this string s)
         {
             return Convert.FromBase64String(s);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static T DeserializeJsonToObject<T>(this string s)
         {
             return JsonConvert.DeserializeObject<T>(s);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string HtmlDecode(this string s)
         {
             return WebUtility.HtmlDecode(s);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string HtmlEncode(this string s)
         {
             return WebUtility.HtmlEncode(s);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string StringConvert(this string s, VbStrConv option)
         {
             return Strings.StrConv(s, option);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string UrlDecode(this string s)
         {
             return WebUtility.UrlDecode(s);
         }
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string UrlEncode(this string s)
         {
             return WebUtility.UrlEncode(s);
@@ -637,6 +668,7 @@ namespace QuickConverter
 
         #region Byte Array
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static string Base64Encode(this byte[] b)
         {
             return Convert.ToBase64String(b);
@@ -646,6 +678,7 @@ namespace QuickConverter
 
         #region Type
 
+        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static object CreateInstance(this Type t)
         {
             return t.CreateInstance(null);
