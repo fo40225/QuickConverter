@@ -170,6 +170,46 @@ namespace QuickConverter
             }
         }
 
+        /// <summary>
+        /// The value passed as the first parameter is converted to a boolean
+        /// value. If value is 0, null, false, the empty string ("") or the string
+        /// "false" will return false. All other values, including any object,
+        /// will return true.
+        /// </summary>
+        /// <param name="o">input value</param>
+        /// <returns>bool</returns>
+        public static bool ToBoolEx(this object o)
+        {
+            if (o == null)
+            {
+                return false;
+            }
+
+            if (o is bool)
+            {
+                return (bool)o;
+            }
+
+            var s = o as string;
+            if (s != null)
+            {
+                if (string.Empty.Equals(s))
+                {
+                    return false;
+                }
+
+                return !string.Equals(s, bool.FalseString, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            var i = o as IConvertible;
+            if (i != null)
+            {
+                return 0 != i.ToDouble(null);
+            }
+
+            return true;
+        }
+
         public static byte ToByte(this object o, bool throwEx = true)
         {
             if (throwEx)
