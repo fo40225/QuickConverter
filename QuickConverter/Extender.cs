@@ -34,7 +34,7 @@ namespace QuickConverter
         }
 
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static object DeepClone<T>(this T o)
+        public static object DeepClone(this object o)
         {
             return JsonConvert.DeserializeObject(o.SerializeToJsonString(), o.GetType());
         }
@@ -139,7 +139,7 @@ namespace QuickConverter
             return JsonConvert.SerializeObject(o);
         }
 
-        public static bool ToBool<T>(this T o, bool throwEx = true)
+        public static bool ToBool(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -170,7 +170,7 @@ namespace QuickConverter
             }
         }
 
-        public static byte ToByte<T>(this T o, bool throwEx = true)
+        public static byte ToByte(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -201,7 +201,7 @@ namespace QuickConverter
             }
         }
 
-        public static char ToChar<T>(this T o, bool throwEx = true)
+        public static char ToChar(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -232,7 +232,7 @@ namespace QuickConverter
             }
         }
 
-        public static DateTime ToDateTime<T>(this T o, bool throwEx = true)
+        public static DateTime ToDateTime(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -263,7 +263,7 @@ namespace QuickConverter
             }
         }
 
-        public static decimal ToDecimal<T>(this T o, bool throwEx = true)
+        public static decimal ToDecimal(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -294,7 +294,7 @@ namespace QuickConverter
             }
         }
 
-        public static double ToDouble<T>(this T o, bool throwEx = true)
+        public static double ToDouble(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -364,7 +364,7 @@ namespace QuickConverter
             }
         }
 
-        public static float ToFloat<T>(this T o, bool throwEx = true)
+        public static float ToFloat(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -395,7 +395,7 @@ namespace QuickConverter
             }
         }
 
-        public static int ToInt<T>(this T o, bool throwEx = true)
+        public static int ToInt(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -426,7 +426,7 @@ namespace QuickConverter
             }
         }
 
-        public static long ToLong<T>(this T o, bool throwEx = true)
+        public static long ToLong(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -457,7 +457,7 @@ namespace QuickConverter
             }
         }
 
-        public static sbyte ToSByte<T>(this T o, bool throwEx = true)
+        public static sbyte ToSByte(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -488,7 +488,7 @@ namespace QuickConverter
             }
         }
 
-        public static short ToShort<T>(this T o, bool throwEx = true)
+        public static short ToShort(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -519,7 +519,7 @@ namespace QuickConverter
             }
         }
 
-        public static uint ToUInt<T>(this T o, bool throwEx = true)
+        public static uint ToUInt(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -550,7 +550,7 @@ namespace QuickConverter
             }
         }
 
-        public static ulong ToULong<T>(this T o, bool throwEx = true)
+        public static ulong ToULong(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
@@ -581,7 +581,7 @@ namespace QuickConverter
             }
         }
 
-        public static ushort ToUShort<T>(this T o, bool throwEx = true)
+        public static ushort ToUShort(this object o, bool throwEx = true)
         {
             if (throwEx)
             {
