@@ -172,9 +172,9 @@ namespace QuickConverter
 
         /// <summary>
         /// The value passed as the first parameter is converted to a boolean
-        /// value. If value is 0, null, false, the empty string ("") or the string
-        /// "false" will return false. All other values, including any object,
-        /// will return true.
+        /// value. If value is 0, null, false, the empty string (""), the string
+        /// "false" or the string "0" will return false. All other values,
+        /// including any object, will return true.
         /// </summary>
         /// <param name="o">input value</param>
         /// <returns>bool</returns>
@@ -194,6 +194,11 @@ namespace QuickConverter
             if (s != null)
             {
                 if (string.Empty.Equals(s))
+                {
+                    return false;
+                }
+
+                if ("0".Equals(s))
                 {
                     return false;
                 }
