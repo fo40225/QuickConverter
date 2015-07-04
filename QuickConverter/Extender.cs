@@ -28,43 +28,9 @@ namespace QuickConverter
         }
 
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static object CallMethod(this object o, string methodName, params object[] args)
-        {
-            return Interaction.CallByName(o, methodName, CallType.Method, args);
-        }
-
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static object DeepClone(this object o)
         {
             return JsonConvert.DeserializeObject(o.SerializeToJsonString(), o.GetType());
-        }
-
-        public static object Field(this object o, string fieldName)
-        {
-            Type t = o.GetType();
-            FieldInfo fi = t.GetField(
-                fieldName,
-                System.Reflection.BindingFlags.Instance
-                | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public);
-            return fi.GetValue(o);
-        }
-
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static T Field<T>(this object o, string fieldName)
-        {
-            return (T)o.Field(fieldName);
-        }
-
-        public static void Field<T>(this T o, string fieldName, string fieldValue)
-        {
-            Type t = o.GetType();
-            FieldInfo fi = t.GetField(
-                fieldName,
-                System.Reflection.BindingFlags.Instance
-                | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public);
-            fi.SetValue(o, fieldValue);
         }
 
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
@@ -113,24 +79,6 @@ namespace QuickConverter
         public static bool IsValueType<T>(this T o)
         {
             return o is ValueType;
-        }
-
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static object Property(this object o, string propertyName)
-        {
-            return Interaction.CallByName(o, propertyName, CallType.Get);
-        }
-
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static T Property<T>(this object o, string propertyName)
-        {
-            return (T)o.Property(propertyName);
-        }
-
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static void Property<T>(this T o, string propertyName, object propertyValue)
-        {
-            Interaction.CallByName(o, propertyName, CallType.Set, propertyValue);
         }
 
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
@@ -370,8 +318,15 @@ namespace QuickConverter
             }
         }
 
-        public static T ToEnum<T>(this object o, bool throwEx = true) where T : struct
+        // C# does not support enum as generic type parameter constraints
+        // you can use UnconstrainedMelody to implement enum constraints
+        public static T ToEnum<T>(this object o, bool throwEx = true) where T : struct/*, IEnumConstraint*/
         {
+            if (!typeof(T).IsEnum)
+            {
+                throw new NotSupportedException("type parameter must be a enum");
+            }
+
             if (throwEx)
             {
                 string s = o as string;
@@ -740,26 +695,5 @@ namespace QuickConverter
         }
 
         #endregion Type
-    }
-
-    public static class TypeFactory
-    {
-        public static Type GetTypeByName(string typeName)
-        {
-            var t = Type.GetType(typeName, false);
-
-            if (t == null)
-            {
-                foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    t = item.GetType(typeName, false);
-                    if (t != null)
-                    {
-                        break;
-                    }
-                }
-            }
-            return t;
-        }
     }
 }
