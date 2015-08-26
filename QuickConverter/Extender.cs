@@ -15,73 +15,73 @@ namespace QuickConverter
     {
         #region Object
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T As<T>(this object o) where T : class
         {
             return o as T;
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Box(this object o)
         {
             return o;
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object DeepClone(this object o)
         {
             return JsonConvert.DeserializeObject(o.SerializeToJsonString(), o.GetType());
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsArray(this object o)
         {
             return Information.IsArray(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDate(this object o)
         {
             return Information.IsDate(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDBNull(this object o)
         {
             return Convert.IsDBNull(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsException(this object o)
         {
             return Information.IsError(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNull(this object o)
         {
             return Information.IsNothing(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNumeric(this object o)
         {
             return Information.IsNumeric(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsReferenceType(this object o)
         {
             return Information.IsReference(o);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValueType<T>(this T o)
         {
             return o is ValueType;
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string SerializeToJsonString(this object o)
         {
             return JsonConvert.SerializeObject(o);
@@ -612,7 +612,7 @@ namespace QuickConverter
             }
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T UnBox<T>(this object o)
         {
             return (T)o;
@@ -622,43 +622,43 @@ namespace QuickConverter
 
         #region String
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] Base64Decode(this string s)
         {
             return Convert.FromBase64String(s);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T DeserializeJsonToObject<T>(this string s)
         {
             return JsonConvert.DeserializeObject<T>(s);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string HtmlDecode(this string s)
         {
             return WebUtility.HtmlDecode(s);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string HtmlEncode(this string s)
         {
             return WebUtility.HtmlEncode(s);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string StringConvert(this string s, VbStrConv option)
         {
             return Strings.StrConv(s, option);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string UrlDecode(this string s)
         {
             return WebUtility.UrlDecode(s);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string UrlEncode(this string s)
         {
             return WebUtility.UrlEncode(s);
@@ -668,7 +668,7 @@ namespace QuickConverter
 
         #region Byte Array
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string Base64Encode(this byte[] b)
         {
             return Convert.ToBase64String(b);
@@ -678,17 +678,11 @@ namespace QuickConverter
 
         #region Type
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-        public static object CreateInstance(this Type t)
-        {
-            return t.CreateInstance(null);
-        }
-
         public static object CreateInstance(this Type t, params object[] args)
         {
             if (t.IsArray)
             {
-                Array.CreateInstance(t, args == null ? 0 : (int)args[0]);
+                return Array.CreateInstance(t, args.Length == 0 ? 0 : (int)args[0]);
             }
 
             return Activator.CreateInstance(t, args);
