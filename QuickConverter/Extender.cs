@@ -120,9 +120,9 @@ namespace QuickConverter
 
         /// <summary>
         /// The value passed as the first parameter is converted to a boolean
-        /// value. If value is 0, null, false, the empty string (""), the string
-        /// "false" or the string "0" will return false. All other values,
-        /// including any object, will return true.
+        /// value. If value is 0, null, false, NaN, the empty string (""), the
+        /// string "false"(ignore case) or the string "0" will return false.
+        /// All other values, including any object, will return true.
         /// </summary>
         /// <param name="o">input value</param>
         /// <returns>bool</returns>
@@ -157,7 +157,27 @@ namespace QuickConverter
             var i = o as IConvertible;
             if (i != null)
             {
-                return 0 != i.ToDouble(null);
+                if (i is double)
+                {
+                    if (double.IsNaN((double)o))
+                    {
+                        return false;
+                    }
+
+                    return 0D != i.ToDouble(null);
+                }
+
+                if (i is float)
+                {
+                    if (float.IsNaN((float)o))
+                    {
+                        return false;
+                    }
+
+                    return 0F != i.ToSingle(null);
+                }
+
+                return decimal.Zero != i.ToDecimal(null);
             }
 
             return true;
