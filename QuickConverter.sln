@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickConverter", "QuickConverter\QuickConverter.csproj", "{BEB2A685-A4E7-4381-BF40-F93962B1C8A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickConverter.Tests", "QuickConverter.Tests01\QuickConverter.Tests.csproj", "{7CD0F1C9-0C61-4D42-B5E1-53CE02CCFA4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BEB2A685-A4E7-4381-BF40-F93962B1C8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB2A685-A4E7-4381-BF40-F93962B1C8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB2A685-A4E7-4381-BF40-F93962B1C8A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD0F1C9-0C61-4D42-B5E1-53CE02CCFA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD0F1C9-0C61-4D42-B5E1-53CE02CCFA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD0F1C9-0C61-4D42-B5E1-53CE02CCFA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD0F1C9-0C61-4D42-B5E1-53CE02CCFA4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

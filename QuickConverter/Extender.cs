@@ -120,9 +120,10 @@ namespace QuickConverter
 
         /// <summary>
         /// The value passed as the first parameter is converted to a boolean
-        /// value. If value is 0, null, false, NaN, the empty string (""), the
-        /// string "false"(ignore case) or the string "0" will return false.
-        /// All other values, including any object, will return true.
+        /// value. If value is 0, null, false, NaN, DBNull, char '\0', char '0',
+        /// the empty string (""), the string "false"(ignore case) or the string
+        /// "0" will return false. All other values, including any object, will 
+        /// return true.
         /// </summary>
         /// <param name="o">input value</param>
         /// <returns>bool</returns>
@@ -138,15 +139,31 @@ namespace QuickConverter
                 return (bool)o;
             }
 
-            var s = o as string;
-            if (s != null)
+            if (o is DBNull)
             {
-                if (string.Empty.Equals(s))
+                return false;
+            }
+
+            if (o is DateTime)
+            {
+                return true;
+            }
+
+            if (o is char)
+            {
+                char c = (char)o;
+                if (char.MinValue.Equals(c) || '0'.Equals(c))
                 {
                     return false;
                 }
 
-                if ("0".Equals(s))
+                return true;
+            }
+
+            var s = o as string;
+            if (s != null)
+            {
+                if (string.Empty.Equals(s) || "0".Equals(s))
                 {
                     return false;
                 }
