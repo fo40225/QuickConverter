@@ -122,7 +122,7 @@ namespace QuickConverter
         /// The value passed as the first parameter is converted to a boolean
         /// value. If value is 0, null, false, NaN, DBNull, char '\0', char '0',
         /// the empty string (""), the string "false"(ignore case) or the string
-        /// "0" will return false. All other values, including any object, will 
+        /// "0" will return false. All other values, including any object, will
         /// return true.
         /// </summary>
         /// <param name="o">input value</param>
@@ -726,5 +726,29 @@ namespace QuickConverter
         }
 
         #endregion Type
+
+        #region Comparison
+
+        public static IComparer<T> ToComparer<T>(this Comparison<T> comparison)
+        {
+            return new FunctorComparer<T>(comparison);
+        }
+
+        #endregion Comparison
+
+        private sealed class FunctorComparer<T> : IComparer<T>
+        {
+            private Comparison<T> comparison;
+
+            public FunctorComparer(Comparison<T> comparison)
+            {
+                this.comparison = comparison;
+            }
+
+            public int Compare(T x, T y)
+            {
+                return comparison(x, y);
+            }
+        }
     }
 }
