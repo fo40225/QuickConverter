@@ -168,7 +168,7 @@ namespace QuickConverter
                     return false;
                 }
 
-                return !string.Equals(s, bool.FalseString, StringComparison.InvariantCultureIgnoreCase);
+                return !string.Equals(s, bool.FalseString, StringComparison.OrdinalIgnoreCase);
             }
 
             var i = o as IConvertible;
