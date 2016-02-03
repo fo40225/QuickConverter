@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -16,7 +17,8 @@ namespace QuickConverter
         #region Object
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T As<T>(this object o) where T : class
+        public static T As<T>(this object o)
+            where T : class
         {
             return o as T;
         }
@@ -87,7 +89,12 @@ namespace QuickConverter
             return JsonConvert.SerializeObject(o);
         }
 
-        public static bool ToBool(this object o, bool throwEx = true)
+        public static bool ToBool(this object o)
+        {
+            return o.ToBool(true);
+        }
+
+        public static bool ToBool(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -113,6 +120,7 @@ namespace QuickConverter
                     {
                         b = default(bool);
                     }
+
                     return b;
                 }
             }
@@ -163,7 +171,7 @@ namespace QuickConverter
             var s = o as string;
             if (s != null)
             {
-                if (string.Empty.Equals(s) || "0".Equals(s))
+                if (string.Empty.Equals(s, StringComparison.OrdinalIgnoreCase) || "0".Equals(s, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
@@ -176,31 +184,36 @@ namespace QuickConverter
             {
                 if (i is double)
                 {
-                    if (double.IsNaN((double)o))
+                    if (double.IsNaN((double)i))
                     {
                         return false;
                     }
 
-                    return 0D != i.ToDouble(null);
+                    return i.ToDouble(null) != 0D;
                 }
 
                 if (i is float)
                 {
-                    if (float.IsNaN((float)o))
+                    if (float.IsNaN((float)i))
                     {
                         return false;
                     }
 
-                    return 0F != i.ToSingle(null);
+                    return i.ToSingle(null) != 0F;
                 }
 
-                return decimal.Zero != i.ToDecimal(null);
+                return i.ToDecimal(null) != decimal.Zero;
             }
 
             return true;
         }
 
-        public static byte ToByte(this object o, bool throwEx = true)
+        public static byte ToByte(this object o)
+        {
+            return o.ToByte(true);
+        }
+
+        public static byte ToByte(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -226,12 +239,18 @@ namespace QuickConverter
                     {
                         b = default(byte);
                     }
+
                     return b;
                 }
             }
         }
 
-        public static char ToChar(this object o, bool throwEx = true)
+        public static char ToChar(this object o)
+        {
+            return o.ToChar(true);
+        }
+
+        public static char ToChar(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -257,12 +276,18 @@ namespace QuickConverter
                     {
                         c = default(char);
                     }
+
                     return c;
                 }
             }
         }
 
-        public static DateTime ToDateTime(this object o, bool throwEx = true)
+        public static DateTime ToDateTime(this object o)
+        {
+            return o.ToDateTime(true);
+        }
+
+        public static DateTime ToDateTime(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -288,12 +313,18 @@ namespace QuickConverter
                     {
                         dt = default(DateTime);
                     }
+
                     return dt;
                 }
             }
         }
 
-        public static decimal ToDecimal(this object o, bool throwEx = true)
+        public static decimal ToDecimal(this object o)
+        {
+            return o.ToDecimal(true);
+        }
+
+        public static decimal ToDecimal(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -319,12 +350,18 @@ namespace QuickConverter
                     {
                         d = default(decimal);
                     }
+
                     return d;
                 }
             }
         }
 
-        public static double ToDouble(this object o, bool throwEx = true)
+        public static double ToDouble(this object o)
+        {
+            return o.ToDouble(true);
+        }
+
+        public static double ToDouble(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -350,6 +387,7 @@ namespace QuickConverter
                     {
                         d = default(double);
                     }
+
                     return d;
                 }
             }
@@ -357,16 +395,24 @@ namespace QuickConverter
 
         // C# does not support enum as generic type parameter constraints
         // you can use UnconstrainedMelody to implement enum constraints
-        public static T ToEnum<T>(this object o, bool throwEx = true) where T : struct/*, IEnumConstraint*/
+        public static T ToEnum<T>(this object o)
+            where T : struct/*, IEnumConstraint*/
+        {
+            return o.ToEnum<T>(true);
+        }
+
+        public static T ToEnum<T>(this object o, bool throwEx)
+            where T : struct/*, IEnumConstraint*/
         {
             if (!typeof(T).IsEnum)
             {
                 throw new NotSupportedException("type parameter must be a enum");
             }
 
+            string s = o as string;
+
             if (throwEx)
             {
-                string s = o as string;
                 if (s != null)
                 {
                     return (T)Enum.Parse(typeof(T), s);
@@ -378,7 +424,6 @@ namespace QuickConverter
             }
             else
             {
-                string s = o as string;
                 if (s != null)
                 {
                     T e;
@@ -396,12 +441,18 @@ namespace QuickConverter
                     {
                         e = (T)(object)0;
                     }
+
                     return e;
                 }
             }
         }
 
-        public static float ToFloat(this object o, bool throwEx = true)
+        public static float ToFloat(this object o)
+        {
+            return o.ToFloat(true);
+        }
+
+        public static float ToFloat(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -427,12 +478,18 @@ namespace QuickConverter
                     {
                         f = default(float);
                     }
+
                     return f;
                 }
             }
         }
 
-        public static int ToInt(this object o, bool throwEx = true)
+        public static int ToInt(this object o)
+        {
+            return o.ToInt(true);
+        }
+
+        public static int ToInt(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -458,12 +515,18 @@ namespace QuickConverter
                     {
                         i = default(int);
                     }
+
                     return i;
                 }
             }
         }
 
-        public static long ToLong(this object o, bool throwEx = true)
+        public static long ToLong(this object o)
+        {
+            return o.ToLong(true);
+        }
+
+        public static long ToLong(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -489,12 +552,18 @@ namespace QuickConverter
                     {
                         l = default(long);
                     }
+
                     return l;
                 }
             }
         }
 
-        public static sbyte ToSByte(this object o, bool throwEx = true)
+        public static sbyte ToSByte(this object o)
+        {
+            return o.ToSByte(true);
+        }
+
+        public static sbyte ToSByte(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -520,12 +589,18 @@ namespace QuickConverter
                     {
                         sb = default(sbyte);
                     }
+
                     return sb;
                 }
             }
         }
 
-        public static short ToShort(this object o, bool throwEx = true)
+        public static short ToShort(this object o)
+        {
+            return o.ToShort(true);
+        }
+
+        public static short ToShort(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -551,12 +626,18 @@ namespace QuickConverter
                     {
                         sh = default(short);
                     }
+
                     return sh;
                 }
             }
         }
 
-        public static uint ToUInt(this object o, bool throwEx = true)
+        public static uint ToUInt(this object o)
+        {
+            return o.ToUInt(true);
+        }
+
+        public static uint ToUInt(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -582,12 +663,18 @@ namespace QuickConverter
                     {
                         ui = default(uint);
                     }
+
                     return ui;
                 }
             }
         }
 
-        public static ulong ToULong(this object o, bool throwEx = true)
+        public static ulong ToULong(this object o)
+        {
+            return o.ToULong(true);
+        }
+
+        public static ulong ToULong(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -613,12 +700,18 @@ namespace QuickConverter
                     {
                         ul = default(ulong);
                     }
+
                     return ul;
                 }
             }
         }
 
-        public static ushort ToUShort(this object o, bool throwEx = true)
+        public static ushort ToUShort(this object o)
+        {
+            return o.ToUShort(true);
+        }
+
+        public static ushort ToUShort(this object o, bool throwEx)
         {
             if (throwEx)
             {
@@ -644,6 +737,7 @@ namespace QuickConverter
                     {
                         us = default(ushort);
                     }
+
                     return us;
                 }
             }
@@ -717,6 +811,7 @@ namespace QuickConverter
 
         public static object CreateInstance(this Type t, params object[] args)
         {
+            Contract.Requires(t != null);
             if (t.IsArray)
             {
                 return Array.CreateInstance(t, args.Length == 0 ? 0 : (int)args[0]);
@@ -738,7 +833,7 @@ namespace QuickConverter
 
         private sealed class FunctorComparer<T> : IComparer<T>
         {
-            private Comparison<T> comparison;
+            private readonly Comparison<T> comparison;
 
             public FunctorComparer(Comparison<T> comparison)
             {
@@ -747,7 +842,7 @@ namespace QuickConverter
 
             public int Compare(T x, T y)
             {
-                return comparison(x, y);
+                return this.comparison(x, y);
             }
         }
     }
