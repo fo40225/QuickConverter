@@ -32,6 +32,11 @@ namespace QuickConverter
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object DeepClone(this object o)
         {
+            if (o == null)
+            {
+                return null;
+            }
+
             return JsonConvert.DeserializeObject(o.SerializeToJsonString(), o.GetType());
         }
 
